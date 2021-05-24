@@ -9,7 +9,7 @@ const postSchema = new mongoose.Schema({
     draft: {type: Boolean, required: true}
   });
 
-PostSchema
+  postSchema
 .virtual('url')
 .get(function () {
   return '/post/' + this._id;

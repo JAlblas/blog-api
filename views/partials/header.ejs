@@ -1,0 +1,13 @@
+<header>
+<nav>   
+        <a href="./">Home</a>
+        <a href="./posts">Messages</a>
+        <% if (currentUser) {%>
+            <a href="./create-message">Create new message</a>
+        <% } else { %>
+            <a href="./register">Register</a>
+        <% } %>
+        <a href="./users">Users</a>
+        <a href="./logout">Logout</a>
+    </nav>
+</header>
