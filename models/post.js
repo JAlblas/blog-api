@@ -1,18 +1,19 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-const postSchema = new mongoose.Schema({
+const postSchema = new Schema(
+{
     title: {type: String, required: true, maxlength: 100},
     message: {type: String},
     timestamp: {type: Date, required: true, default: Date.now},
     user: {type: Schema.Types.ObjectId, ref: 'user'},
     draft: {type: Boolean, required: true}
-  });
+});
 
-  postSchema
+postSchema
 .virtual('url')
 .get(function () {
-  return '/post/' + this._id;
+  return '/posts/' + this._id;
 });
 
 
