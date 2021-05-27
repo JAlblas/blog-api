@@ -3,13 +3,9 @@ var router = express.Router();
 
 var userController = require('../controllers/userController');
 
-router.get('/', userController.user_list);
-router.post('register', userController.registerUser);
-
-
-router.get('/:id', function(req, res, next) {
-  res.json(req.params.id);
-});
+router.get('/', userController.getUsers);
+router.post('/', userController.registerUser);
+router.get('/:id', userController.getUser);
 
 router.put('/:id', function(req, res, next) {
   // Update
