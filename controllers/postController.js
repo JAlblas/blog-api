@@ -42,23 +42,33 @@ exports.createPost = function(req, res, next) {
 }
 
 exports.deletePost = async function(req, res, next) {
-    console.log("RUNNING?")
-    try {
-        const post = await Post.findByIdAndDelete(req.params.id);
-        console.log(post);
-        if (!post) {
-          return res
-            .status(404)
-            .json({ err: `post with id ${req.params.id} not found` });
+    Post.findByIdAndDelete(req.params.id, function(err, post) {
+        if (err) {
+            return res.status(404).json({ err: `post with id ${req.params.id} not found`});
+        } else {
+            if (post) {
+                res.status(200).json({ msg: `post ${req.params.id} deleted sucessfuly` });
+            } else {
+                res.status(404).json({ err: `post with id ${req.params.id} not found`});
+            }
+             
         }
-        res
-          .status(200)
-          .json({ msg: `post ${req.params.id} deleted sucessfuly` });
-      } catch (err) {
-        next(err);
-      }
+    })
 }
 
 exports.updatePost = function(req, res, next) {
-    
+    const { title, message } = req.body;
+    Post.findByIdAndUpdate(req.params.id, {
+        title,
+        message,
+    }, 
+    {
+        useFindAndModify: true
+    }, function(err, post) {
+        if (err) {
+            res.status(404).json({error: err});
+        } else {
+            res.status(200).json({ msg: "updated sucessfuly" });
+        }
+    });
 }
