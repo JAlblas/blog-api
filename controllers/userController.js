@@ -9,7 +9,7 @@ exports.getUsers = function(req, res) {
     .exec(function (err, users) {
       if (err) { return next(err); }
       //Successful, so render
-      res.json(users);
+      res.status(200).json(users);
     });
 };
 

@@ -40,3 +40,25 @@ exports.createPost = function(req, res, next) {
         res.redirect("/");
     });
 }
+
+exports.deletePost = async function(req, res, next) {
+    console.log("RUNNING?")
+    try {
+        const post = await Post.findByIdAndDelete(req.params.id);
+        console.log(post);
+        if (!post) {
+          return res
+            .status(404)
+            .json({ err: `post with id ${req.params.id} not found` });
+        }
+        res
+          .status(200)
+          .json({ msg: `post ${req.params.id} deleted sucessfuly` });
+      } catch (err) {
+        next(err);
+      }
+}
+
+exports.updatePost = function(req, res, next) {
+    
+}
