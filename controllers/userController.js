@@ -45,3 +45,35 @@ exports.createUser = function(req, res, next) {
         });
     });
 }
+
+exports.deleteUser = async function(req, res, next) {
+    User.findByIdAndDelete(req.params.id, function(err, post) {
+        if (err) {
+            return res.status(404).json({ err: `user with id ${req.params.id} not found`});
+        } else {
+            if (post) {
+                res.status(200).json({ msg: `user ${req.params.id} deleted sucessfuly` });
+            } else {
+                res.status(404).json({ err: `user with id ${req.params.id} not found`});
+            }
+             
+        }
+    })
+}
+
+exports.updateUser = function(req, res, next) {
+    const { username, email } = req.body;
+    User.findByIdAndUpdate(req.params.id, {
+        username,
+        email,
+    }, 
+    {
+        useFindAndModify: true
+    }, function(err, post) {
+        if (err) {
+            res.status(404).json({error: err});
+        } else {
+            res.status(200).json({ msg: "updated sucessfuly" });
+        }
+    });
+}
