@@ -32,7 +32,7 @@ exports.createPost = function(req, res, next) {
         message: req.body.message,
         timestamp: Date(),
         user: "60940a5f66d1dd495173fbe6",
-        draft: true
+        post: ""
     }).save(err => {
         if (err) { 
             return next(err);
