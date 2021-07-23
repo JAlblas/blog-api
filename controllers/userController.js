@@ -25,7 +25,7 @@ exports.getUser = function(req, res, next) {
 exports.createUser = function(req, res, next) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ errors: errors.array() });
     }
 
     bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
@@ -33,7 +33,6 @@ exports.createUser = function(req, res, next) {
             return next(err);
         }
         const user = new User({
-            username: req.body.username,
             email: req.body.email,
             password: hashedPassword,
             created: Date()

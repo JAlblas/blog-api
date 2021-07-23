@@ -3,10 +3,19 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema(
   {
-    username: {type: String, required: true, maxlength: 100},
     email: {type: String, required: true},
     password: {type: String},
     created: {type: Date, default: Date.now}
+  }
+);
+
+userSchema.pre(
+  'save',
+  async function(next) {
+    const user = this;
+    const hash = await bcrypt.hash(this.password, 10);
+    user.password = hash;
+    next();
   }
 );
 
