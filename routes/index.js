@@ -5,7 +5,7 @@ const router = express.Router();
 
 const { body, validationResult } = require('express-validator');
 
-
+require('../auth/auth')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -19,12 +19,14 @@ router.post(
     // password must be at least 5 chars long
     body('password').isLength({ min: 5 }),
   ],
-  (req, res) => {
+  (req, res, next) => {
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    // if validation is successful, call next() to go on with passport authentication.
+    next();
   },
   passport.authenticate('signup', { session: false }), 
     async (req, res, next) => {
