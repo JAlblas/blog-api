@@ -28,13 +28,11 @@ router.post(
     // if validation is successful, call next() to go on with passport authentication.
     next();
   },
-  passport.authenticate('signup', { session: false }), 
-    async (req, res, next) => {
-      res.json({
-        message: 'Signup successful',
-        user: req.user
-      })
-    }
+  passport.authenticate('signup', { session: false, 
+    successRedirect: '/',
+    failureRedirect: '/signup',
+    failureFlash : true 
+  })
 );
 
 router.post(
@@ -45,6 +43,8 @@ router.post(
       async (err, user, info) => {
         try {
           if (err || !user) {
+            console.log(err);
+            console.log(user);
             const error = new Error('An error occurred.');
 
             return next(error);
