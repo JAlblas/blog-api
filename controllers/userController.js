@@ -7,6 +7,8 @@ exports.getUsers = function(req, res) {
     User.find()
     .sort([['name', 'ascending']])
     .exec(function (err, users) {
+        console.log(err);
+        console.log(users);
       if (err) { return next(err); }
       //Successful, so render
       res.status(200).json(users);
